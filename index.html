@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="AngularContacts" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="styles.css">
+	<title>Angular Contacts</title>
+</head>
+<body ng-controller="homeCtrl">
+
+<main class="wrapper">
+	<header>
+		<button
+			ng-show="!showNewContactForm"
+			ng-click="showNewContactForm = !showNewContactForm"
+			class="btn btn-primary"
+		>
+			Add Contact
+		</button>
+
+		<div ng-show="showNewContactForm" class="new-contact">
+			<div class="form-group">
+				<label>Name</label>
+				<input
+					ng-model="newContact.name"
+					class="form-control"
+					type="text"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label>Phone #</label>
+				<input
+					ng-model="newContact.phone"
+					class="form-control"
+					type="text"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label>Email</label>
+				<input
+					ng-model="newContact.email"
+					class="form-control"
+					type="text"
+				/>
+			</div>
+
+			<button ng-click="saveNewContact( newContact )" class="btn btn-success">Submit</button>
+			<button ng-click="clearNewContact()" class="btn btn-danger">Cancel</button>
+		</div>
+	</header>
+
+	<div class="contacts">
+		<input
+			ng-model="contactSearch"
+			type="text"
+			class="form-control search-contacts"
+			placeholder="Search contacts..."
+		>
+		<table class="table table-bordered">
+			<tr>
+				<th>Name</th>
+				<th>Phone #</th>
+				<th>Email</th>
+			</tr>
+			<tr ng-repeat="contact in contacts | orderBy: 'name' | filter: contactSearch">
+				<td>
+					<img class="img-circle" ng-src="{{ contact.picture }}">
+					{{ contact.name }}
+				</td>
+				<td>{{ contact.phone }}</td>
+				<td>{{ contact.email }}</td>
+			</tr>
+		</table>
+	</div>
+</main>
+	
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
+<script src="app.js"></script>
+<script src="homeCtrl.js"></script>
+</body>
+</html>
