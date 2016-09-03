@@ -1,34 +1,3 @@
-angular.module( "AngularContacts" )
-.controller( "homeCtrl", function( $scope ) {
-	$scope.contacts = contacts;
-	$scope.showNewContactForm = false;
-
-	$scope.clearNewContact = function() {
-		$scope.showNewContactForm = false;
-		$scope.newContact = {
-			name: ""
-			, phone: ""
-			, email: ""
-		};
-	}
-
-	$scope.saveNewContact = function( newContact ) {
-		if ( !newContact.name || !newContact.phone || !newContact.email ) {
-			return alert( "All fields required!" );
-		}
-		newContact.picture = "http://placehold.it/32x32";
-		contacts.push( newContact );
-
-		$scope.newContact = {
-			name: ""
-			, phone: ""
-			, email: ""
-		};
-
-		$scope.showNewContactForm = false;
-	}
-} );
-
 var contacts = [
   {
     "_id": "57caeff3a4df71209304615a",
