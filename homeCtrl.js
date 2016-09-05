@@ -1,3 +1,22 @@
+// set up a homeCtrl
+// connect it to index.html
+// test that its working
+
+angular.module( "AngularContacts" )
+.controller( "homeCtrl", function( $scope ) {
+  $scope.contacts = contacts;
+  $scope.showNewContactForm = false;
+
+  $scope.addContact = function( contact ) {
+    contact.picture = "http://placehold.it/32x32";
+    $scope.contacts.push( contact );
+
+    $scope.newContact = {};
+    $scope.showNewContactForm = false;
+  }
+
+} );
+
 var contacts = [
   {
     "_id": "57caeff3a4df71209304615a",

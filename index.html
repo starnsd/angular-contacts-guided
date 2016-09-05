@@ -1,23 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="AngularContacts" lang="en">
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="styles.css">
 	<title>Angular Contacts</title>
 </head>
-<body>
+<body ng-controller="homeCtrl">
 
 <main class="wrapper">
 	<header>
-		<button class="btn btn-primary">
+		<button
+			ng-click="showNewContactForm = !showNewContactForm"
+			ng-hide="showNewContactForm"
+			class="btn btn-primary"
+		>
 			Add Contact
 		</button>
 
-		<div class="new-contact">
+		<div ng-show="showNewContactForm" class="new-contact">
 			<div class="form-group">
 				<label>Name</label>
 				<input
+					ng-model="newContact.name"
 					class="form-control"
 					type="text"
 				/>
@@ -26,6 +31,7 @@
 			<div class="form-group">
 				<label>Phone #</label>
 				<input
+					ng-model="newContact.phone"
 					class="form-control"
 					type="text"
 				/>
@@ -34,18 +40,27 @@
 			<div class="form-group">
 				<label>Email</label>
 				<input
+					ng-model="newContact.email"
 					class="form-control"
 					type="text"
 				/>
 			</div>
 
-			<button class="btn btn-success">Submit</button>
-			<button class="btn btn-danger">Cancel</button>
+			<button
+				ng-click="addContact( newContact )"
+				class="btn btn-success">Submit</button>
+			<button
+				ng-click="showNewContactForm = !showNewContactForm"
+				class="btn btn-danger"
+			>
+				Cancel
+			</button>
 		</div>
 	</header>
 
 	<div class="contacts">
 		<input
+			ng-model="searchText"
 			type="text"
 			class="form-control search-contacts"
 			placeholder="Search contacts..."
@@ -56,17 +71,21 @@
 				<th>Phone #</th>
 				<th>Email</th>
 			</tr>
-			<tr>
+			<tr ng-repeat="contact in contacts | orderBy: 'name' | filter: searchText">
 				<td>
-					<img class="img-circle" src="http://placehold.it/32x32">
-					Ryan Walsh
+					<img class="img-circle" ng-src="{{ contact.picture }}">
+					{{ contact.name }}
 				</td>
-				<td>1 (555) 555 1234</td>
-				<td>ryan.walsh@devmounta.in</td>
+				<td>{{ contact.phone }}</td>
+				<td>{{ contact.email }}</td>
 			</tr>
 		</table>
 	</div>
 </main>
 	
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+<script src="app.js"></script>
+<script src="homeCtrl.js"></script>
 </body>
 </html>
