@@ -1,25 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="AngularMail" lang="en">
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="styles.css">
 	<title>Angular Contacts</title>
 </head>
-<body>
+<body ng-controller="homeCtrl">
 
 <main class="wrapper">
 	<header>
-		<button class="btn btn-primary">
+		<button
+			ng-hide="showNewContactForm"
+			ng-click="showNewContactForm = !showNewContactForm"
+			class="btn btn-primary">
 			Add Contact
 		</button>
 
-		<div class="new-contact">
+		<div ng-if="showNewContactForm" class="new-contact">
 			<div class="form-group">
 				<label>Name</label>
 				<input
 					class="form-control"
 					type="text"
+					ng-model="newContact.name"
 				/>
 			</div>
 
@@ -28,6 +32,7 @@
 				<input
 					class="form-control"
 					type="text"
+					ng-model="newContact.phone"
 				/>
 			</div>
 
@@ -36,11 +41,12 @@
 				<input
 					class="form-control"
 					type="text"
+					ng-model="newContact.email"
 				/>
 			</div>
 
-			<button class="btn btn-success">Submit</button>
-			<button class="btn btn-danger">Cancel</button>
+			<button ng-click="addNewContact(newContact)" class="btn btn-success">Submit</button>
+			<button ng-click="clearContactForm()" class="btn btn-danger">Cancel</button>
 		</div>
 	</header>
 
@@ -49,6 +55,7 @@
 			type="text"
 			class="form-control search-contacts"
 			placeholder="Search contacts..."
+			ng-model="searchText"
 		>
 		<table class="table table-bordered">
 			<tr>
@@ -56,17 +63,25 @@
 				<th>Phone #</th>
 				<th>Email</th>
 			</tr>
-			<tr>
+			<tr ng-repeat="contact in contacts | filter: searchText track by $index">
 				<td>
-					<img class="img-circle" src="http://placehold.it/32x32">
-					Ryan Walsh
+					<img class="img-circle" ng-src="{{contact.picture}}">
+					{{contact.name}}
 				</td>
-				<td>1 (555) 555 1234</td>
-				<td>ryan.walsh@devmounta.in</td>
+				<td>{{contact.phone}}</td>
+				<td>
+					{{contact.email}}
+				<button
+					ng-click="deleteContact($index)"
+					class="btn btn-danger">Delete</button>
+				</td>
 			</tr>
 		</table>
 	</div>
 </main>
-	
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+<script src="app.js"></script>
+<script src="homeCtrl.js"></script>
 </body>
 </html>

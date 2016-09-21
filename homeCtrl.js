@@ -1,3 +1,31 @@
+angular.module("AngularMail")
+.controller("homeCtrl", function ($http, $scope) {
+  $scope.contacts = contacts;
+  $scope.showNewContactForm = false;
+
+  $scope.deleteContact = function(index) {
+    $scope.contacts.splice(index, 1);
+  };
+
+  $scope.clearContactForm = function() {
+    $scope.newContact = {
+      name: ""
+      , phone: ""
+      , email: ""
+    };
+    $scope.showNewContactForm = false;
+  };
+
+  $scope.addNewContact = function(newContact) {
+    newContact.picture = "http://placehold.it/32x32";
+    $scope.contacts.push(newContact);
+
+  $scope.clearContactForm();
+  }
+});
+
+
+
 var contacts = [
   {
     "_id": "57caeff3a4df71209304615a",
